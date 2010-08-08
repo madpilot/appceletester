@@ -1,10 +1,10 @@
 require 'test_helper'
 
 class TitaniumTest < Test::Unit::TestCase
+  include TestHelper
+
   def setup
-    @context = Johnson::Runtime.new
-    @context.global['Titanium'] = Titanium
-    @context.global['Ti'] = Titanium
+    setup_context
   end
 
   def teardown
@@ -86,7 +86,17 @@ class TitaniumTest < Test::Unit::TestCase
   end
 
   def test_include
-    # TODO
+    @context.evaluate <<-EOF
+      Titanium.include('include.js');
+    EOF
+    assert @context.evaluate("typeof IncludedLibrary != 'undefined';");
+  end
+
+  def full_test_include
+    @context.evaluate <<-EOF
+      Titanium.include('#{File.dirname(__FILE__)}/test/fixtures/include.js');
+    EOF
+    assert @context.evaluate("typeof IncludedLibrary != 'undefined';");
   end
 
   def test_remove_event_listener

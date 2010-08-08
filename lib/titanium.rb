@@ -11,6 +11,22 @@ require 'lib/titanium/database/db'
 require 'lib/titanium/database/result_set'
 
 module Titanium
+  def self.context
+    @context
+  end
+
+  def self.context=(context)
+    @context = context
+  end
+
+  def self.resource_path
+    @resource_path
+  end
+
+  def self.resource_path=(path)
+    @resource_path = path
+  end
+
   def self.addEventListener(name, &lambda)
     self.events[name] ||= []
     self.events[name] << lambda
@@ -23,7 +39,12 @@ module Titanium
   end
 
   def self.include(name)
-     
+    name = resource_path + "/" + name unless name[0..0] == "/"
+    script = ''
+    File.open(name, 'r') do |fh|
+      script = fh.read
+    end
+    @context.evaluate(script)
   end
 
   def self.removeEventListener(name, &lambda)
