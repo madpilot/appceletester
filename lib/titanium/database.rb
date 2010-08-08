@@ -16,6 +16,7 @@ module Titanium
     def self.reset
       @databases = {}
     end
+  
   protected
     def self.databases
       @databases ||= {}

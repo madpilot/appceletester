@@ -10,14 +10,15 @@ module Titanium
       end
 
       def close
-        SQLite3::Database.close(@db)
+        @db.close
+        Titanium::Database.send(:databases).delete_if { |k, v| k == self.name }
         nil
       end
 
       def execute(sql, *args)
-        rows = db.execute(sql, args)
-        self.lastInsertRowId = SQLite3::Database.last_insert_row_id(@db)
-        self.rowsAffected = SQLite3::Database.changes(@db)
+        rows = @db.query(sql, args)
+        self.lastInsertRowId = @db.last_insert_row_id
+        self.rowsAffected = @db.changes
         Titanium::Database::ResultSet.new(rows)
       end
 
