@@ -13,16 +13,16 @@ module Titanium
       end
 
       def field(index)
-        @results[index]
+        current[index]
       end
 
       def fieldByName(name)
         index = @results.columns.index(name)
-        fieldName(index)
+        field(index)
       end
 
       def fieldCount
-        @results.columns
+        @results.columns.size
       end
 
       def fieldName(index)
@@ -35,6 +35,11 @@ module Titanium
 
       def next
         @results.next || false
+      end
+
+    protected
+      def current
+        @current ||= @results.next
       end
     end
   end

@@ -1,4 +1,4 @@
-require 'johnson/tracemonkey'
+require 'johnson'
 
 require 'lib/titanium/api'
 require 'lib/titanium/accelerometer'

@@ -31,6 +31,18 @@ class TitaniumDatabaseResultSetTest < Test::Unit::TestCase
     assert_equal 'Myles', @result_set.field(0)
   end
 
+  def test_field_by_name
+    assert_equal 'Myles', @result_set.fieldByName('name')
+  end
+
+  def test_field_count
+    assert_equal 1, @result_set.fieldCount
+  end
+
+  def test_field_name
+    assert 'name', @result_set.fieldName(0)
+  end
+
   def test_next
     assert @result_set.next != false
     assert @result_set.next != false
